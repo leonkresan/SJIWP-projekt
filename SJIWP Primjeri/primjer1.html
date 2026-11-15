@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="hr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Primjer 1 - AJAX</title>
+  </head>
+  <body>
+    <h1>Popis korisnika</h1>
+
+    <button id="gumb">Dohvati korisnike</button>
+    <button id="gumbGreska">Greška</button>
+
+    <p id="poruka"></p>
+    <ul id="popis"></ul>
+
+    <script>
+      // Dohvaćamo elemente iz HTML-a
+      let gumb = document.getElementById("gumb");
+      let gumbGreska = document.getElementById("gumbGreska");
+      let poruka = document.getElementById("poruka");
+      let popis = document.getElementById("popis");
+
+      // Funkcija koja dohvaća podatke s adrese koju joj damo
+      function dohvati(adresa) {
+        popis.innerHTML = "";
+        poruka.innerHTML = "Učitavanje...";
+
+        fetch(adresa)
+          .then(function (odgovor) {
+            return odgovor.json(); // pretvaramo JSON u JS objekt
+          })
+          .then(function (korisnici) {
+            poruka.innerHTML = "Podaci su dohvaćeni!";
+            for (let i = 0; i < korisnici.length; i++) {
+              popis.innerHTML += "<li>" + korisnici[i].name + "</li>";
+            }
+          })
+          .catch(function (greska) {
+            poruka.innerHTML = "Došlo je do greške pri dohvaćanju podataka.";
+          });
+      }
+
+      // Klik na gumb pokreće dohvaćanje
+      gumb.onclick = function () {
+        dohvati("https://jsonplaceholder.typicode.com/users");
+      };
+
+      // Adresa koja ne postoji, da vidimo grešku
+      gumbGreska.onclick = function () {
+        dohvati("https://ova-adresa-ne-postoji-123.com/podaci");
+      };
+    </script>
+  </body>
+</html>

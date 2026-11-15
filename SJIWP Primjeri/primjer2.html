@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="hr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Primjer 2 - JSON i XML</title>
+  </head>
+  <body>
+    <h1>JSON i XML</h1>
+
+    <h3>JSON zapis</h3>
+    <pre id="json"></pre>
+
+    <h3>XML zapis (isti podatak)</h3>
+    <pre id="xml"></pre>
+
+    <h3>JSON tekst pretvoren natrag u objekt</h3>
+    <p id="rezultat"></p>
+
+    <script>
+      //Običan javascript objekt
+      let ucenik = {
+        ime: "Ivan",
+        godine: 17,
+        razred: "4.a",
+      };
+
+      //Objekt se pretvara u JSON tekst
+      let jsonTekst = JSON.stringify(ucenik);
+      document.getElementById("json").textContent = jsonTekst;
+
+      //Isti podatak zapisan kao XML (samo tekst)
+      let xmlTekst =
+        "<ucenik>\n" +
+        "  <ime>Ivan</ime>\n" +
+        "  <godine>17</godine>\n" +
+        "  <razred>4.a</razred>\n" +
+        "</ucenik>";
+      document.getElementById("xml").textContent = xmlTekst;
+
+      // 4. JSON tekst se pretvara natrag u javascript objekt
+      let objekt = JSON.parse(jsonTekst);
+      document.getElementById("rezultat").textContent =
+        "Ime: " + objekt.ime + ", godine: " + objekt.godine;
+    </script>
+  </body>
+</html>
